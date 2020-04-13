@@ -73,18 +73,18 @@ class MediaFile(object):
         if *raw* is *True*, print the unmodified keys and values.
         """
         tags = self.wrapper if not raw else self.wrapper.raw
-        print u'{}:'.format(self.path)
-        names = tags.keys()
+        print('{}:'.format(self.path))
+        names = list(tags.keys())
         names.sort()
         w = max(len(k) for k in names)
-        fmt = u'    {{:<{}}} : {{}}'.format(w)
+        fmt = '    {{:<{}}} : {{}}'.format(w)
         for k in names:
             v = tags[k]
             try:
-                v = unicode(v)
+                v = str(v)
             except UnicodeDecodeError:
                 v = repr(v)
-            print fmt.format(k, cutoff(v, 100))
+            print(fmt.format(k, cutoff(v, 100)))
 
     def __getattr__(self, key):
         return getattr(self.wrapper, key)

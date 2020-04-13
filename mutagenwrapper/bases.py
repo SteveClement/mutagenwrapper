@@ -75,9 +75,9 @@ class PairTagHandler(TagHandler):
         old_value = self._get_data(obj.raw.get(self.name, []))
         new_value = []
         n = min(len(value), len(old_value))
-        for i in xrange(n):
+        for i in range(n):
             new_value.append(self._update_value(value[i], old_value[i]))
-        for i in xrange(n, len(value)):
+        for i in range(n, len(value)):
             new_value.append(self._update_value(value[i], None))
         self._set_data(obj, new_value)
 
@@ -110,7 +110,7 @@ class TagsWrapperMeta(type):
     def __new__(cls, name, bases, attrs):
         handlers = {}
         lut = {}
-        for attrname, attr in attrs.iteritems():
+        for attrname, attr in attrs.items():
             if isinstance(attr, TagHandler):
                 handlers[attrname] = attr
                 if hasattr(attr, 'name'):
@@ -121,10 +121,7 @@ class TagsWrapperMeta(type):
         return super(TagsWrapperMeta, cls).__new__(cls, name, bases, attrs)
 
 
-class TagsWrapper(object):
-    __metaclass__ = TagsWrapperMeta
-
-    # Class variables set by metaclass
+class TagsWrapper(object, metaclass=TagsWrapperMeta):
     __handlers__ = {}
     __custom_handlers__ = {}
     __lut__ = {}
@@ -202,14 +199,14 @@ class TagsWrapper(object):
         return iter(self.get_tags())
 
     def values(self):
-        return list(self.itervalues())
+        return list(self.values())
 
     def itervalues(self):
         for key in self.get_tags():
             yield getattr(self, key)
 
     def items(self):
-        return list(self.iteritems())
+        return list(self.items())
 
     def iteritems(self):
         for key in self.get_tags():
@@ -224,7 +221,7 @@ class FreeformTagsWrapper(TagsWrapper):
         ret = set()
         cls = self.__class__
         h = cls.freeform_tag_handler
-        for name, value in self.raw.iteritems():
+        for name, value in self.raw.items():
             if not value:
                 continue
             if name in cls.__lut__:
