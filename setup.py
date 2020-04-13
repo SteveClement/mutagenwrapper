@@ -35,6 +35,6 @@ setup(
     ],
     keywords = 'audio metadata tags',
     install_requires = [
-        'mutagen == 1.29',
+        'mutagen == 1.44.0',
     ],
 )
